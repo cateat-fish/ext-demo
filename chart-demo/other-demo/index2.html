@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=s, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- jq -->
+	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!-- charts -->
+    <script src="../chart/highcharts.js"></script>
+    <script src="../chart/exporting.js"></script>
+    <script src="../chart/oldie.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+
+    <!-- style样式 -->
+    <link rel="stylesheet" href="./style.css">
+    <!-- 主题 sand-signika.js grid-light.js dark-unica.js -->   
+    <!-- <script src="./chart/dark-unica.js"></script> -->
+</head>
+<body>
+    <div class="page">
+        <!-- 顶部查询条件 -->
+        <div class="searchInfo">
+            <span>查询条件：</span>
+            <span>期次：</span>
+            <span>
+                <select name="" id="">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </span>
+            <span class="btn">
+                <input type="button" value="点击查询">
+            </span>
+        </div>
+        <!-- 主视图 -->
+        <div class="viewMain viewMain2">
+            <div class="more1">
+                <div class="chartView chartView-1">
+                <div class="head">
+                    <a class="text active" href="javascript:;">存款</a>
+                    <a class="text" href="javascript:;">贷款</a>
+                </div>
+                <div class="charts-flex">
+                    <div id="chartView-1" class="main"></div>
+                    <div id="chartView-2" class="main"></div>
+                </div>
+                </div>
+                <div class="chartView chartView-2">
+                        <div class="head">
+                            <a class="text active" href="javascript:;">业绩排名</a>
+                        </div>
+                        <div id="chartView" class="main">
+                            <div>
+                                <span>排名方式：</span>
+                                <span>
+                                    <select name="" id="">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div>
+                                <span>排名类型：</span>
+                                <span>
+                                    <select name="" id="">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div>
+                                <span>排名指标：</span>
+                                <span>
+                                    <select name="" id="">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="chartView chartView-3">
+                <div class="head">
+                    <a class="text active" href="javascript:;">不同产品各类数据比较</a>
+                </div>
+                <div class="charts-flex">
+                    <div id="chartView-2-1" class="main"></div>
+                    <div id="chartView-3" class="main"></div>
+                    <div id="chartView-4" class="main"></div>
+                </div>
+            </div>
+            <div class="chartView chartView-4">
+                <div class="head">
+                    <a class="text active" href="javascript:;">同一产品不同地区/片区比较</a>
+                </div>
+                <div class="charts-flex">
+                    <div id="chartView-3-1" class="main"></div>
+                    <div id="chartView-3-2" class="main"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    // 第一个
+    var chart = Highcharts.chart('chartView-1',{
+        chart: {
+            width:550,
+            type: 'column'
+        },
+        title: {
+            text: '一年趋势'
+        },
+        xAxis: {
+            categories: [
+                '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+            ],
+            crosshair: true
+        },
+        // yAxis: {
+        //     min: 0,
+        //     title: {
+        //         text: '降雨量 (mm)'
+        //     }
+        // },
+        tooltip: {
+            // head + 每个 point + footer 拼接成完整的 table
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '东京',
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+    });
+
+    // 第二个
+    Highcharts.chart('chartView-2', {
+		chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+                type: 'pie',
+                width:400,
+		},
+		title: {
+				text: '各类客户占比'
+		},
+		tooltip: {
+				// pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				// pie: {
+				// 		allowPointSelect: true,
+				// 		cursor: 'pointer',
+				// 		dataLabels: {
+				// 				enabled: true,
+				// 				format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+				// 				style: {
+				// 						color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				// 				}
+				// 		}
+				// }
+		},
+		series: [{
+				name: 'Brands',
+				colorByPoint: true,
+				data: [{
+						name: 'Chrome',
+						y: 61.41,
+						sliced: true,
+						selected: true
+				}, {
+						name: 'Internet Explorer',
+						y: 11.84
+				}, {
+						name: 'Firefox',
+						y: 10.85
+				}, {
+						name: 'Edge',
+						y: 4.67
+				}, {
+						name: 'Safari',
+						y: 4.18
+				}, {
+						name: 'Sogou Explorer',
+						y: 1.64
+				}, {
+						name: 'Opera',
+						y: 1.6
+				}, {
+						name: 'QQ',
+						y: 1.2
+				}, {
+						name: 'Other',
+						y: 2.61
+				}]
+		}]
+    });
+
+    Highcharts.chart('chartView-2-1', {
+		chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+                type: 'pie',
+                width:400,
+		},
+		title: {
+				text: '各类客户占比'
+		},
+		tooltip: {
+				// pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		plotOptions: {
+				// pie: {
+				// 		allowPointSelect: true,
+				// 		cursor: 'pointer',
+				// 		dataLabels: {
+				// 				enabled: true,
+				// 				format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+				// 				style: {
+				// 						color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				// 				}
+				// 		}
+				// }
+		},
+		series: [{
+				name: 'Brands',
+				colorByPoint: true,
+				data: [{
+						name: 'Chrome',
+						y: 61.41,
+						sliced: true,
+						selected: true
+				}, {
+						name: 'Internet Explorer',
+						y: 11.84
+				}, {
+						name: 'Firefox',
+						y: 10.85
+				}, {
+						name: 'Edge',
+						y: 4.67
+				}, {
+						name: 'Safari',
+						y: 4.18
+				}, {
+						name: 'Sogou Explorer',
+						y: 1.64
+				}, {
+						name: 'Opera',
+						y: 1.6
+				}, {
+						name: 'QQ',
+						y: 1.2
+				}, {
+						name: 'Other',
+						y: 2.61
+				}]
+		}]
+    });
+     // 第三个
+    var chart = Highcharts.chart('chartView-3',{
+        chart: {
+            type: 'column',
+            width:400,
+        },
+        title: {
+            text: '不同产品各类数据比较'
+        },
+        xAxis: {
+            categories: [
+                '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+            ],
+            crosshair: true
+        },
+        // yAxis: {
+        //     min: 0,
+        //     title: {
+        //         text: '降雨量 (mm)'
+        //     }
+        // },
+        tooltip: {
+            // head + 每个 point + footer 拼接成完整的 table
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '东京',
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+    });
+    
+    var chart = Highcharts.chart('chartView-4',{
+        chart: {
+            type: 'column',
+            width:400,
+        },
+        title: {
+            text: '不同产品各类数据比较'
+        },
+        xAxis: {
+            categories: [
+                '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+            ],
+            crosshair: true
+        },
+        // yAxis: {
+        //     min: 0,
+        //     title: {
+        //         text: '降雨量 (mm)'
+        //     }
+        // },
+        tooltip: {
+            // head + 每个 point + footer 拼接成完整的 table
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '东京',
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        },
+        {
+            name: '伦敦',
+            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+        }, ]
+    });
+
+
+    var chart = Highcharts.chart('chartView-3-1',{
+        chart: {
+            type: 'column',
+            width:400,
+        },
+        title: {
+            text: '不同产品各类数据比较'
+        },
+        xAxis: {
+            categories: [
+                '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+            ],
+            crosshair: true
+        },
+        // yAxis: {
+        //     min: 0,
+        //     title: {
+        //         text: '降雨量 (mm)'
+        //     }
+        // },
+        tooltip: {
+            // head + 每个 point + footer 拼接成完整的 table
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '东京',
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+    });
+
+    var chart = Highcharts.chart('chartView-3-2',{
+        chart: {
+            type: 'column',
+            width:400,
+        },
+        title: {
+            text: '不同产品各类数据比较'
+        },
+        xAxis: {
+            categories: [
+                '一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'
+            ],
+            crosshair: true
+        },
+        // yAxis: {
+        //     min: 0,
+        //     title: {
+        //         text: '降雨量 (mm)'
+        //     }
+        // },
+        tooltip: {
+            // head + 每个 point + footer 拼接成完整的 table
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '东京',
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+    });
+
+</script>
+
+<script>
+
+    $('.chartView-1 .head a').each(function(i,e){
+        $(this).click(function(){
+            $(this).addClass('active').siblings().removeClass('active')
+
+        })
+    })
+</script>

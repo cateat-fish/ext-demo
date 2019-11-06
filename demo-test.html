@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css"></link>
+    <!-- js -->
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./index.js"></script>
+
+    <style>
+        
+        p.line{
+            margin: 0;
+        }
+        p.line input{
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+
+    var status_store = new Ext.data.JsonStore({  
+        autoLoad : true,  
+            fields:['id', 'text' ],  
+            data: [  
+                {id:'1', text: '是'},  
+                {id:'2', text: '否'},         
+            ]  
+    });
+    var type = new Ext.data.JsonStore({  
+        autoLoad : true,  
+            fields:['id', 'text' ],  
+            data: [  
+                {id:'1', text: '方式1'},  
+                {id:'2', text: '方式二'},         
+            ]  
+    });  
+    var  calculators = `<fieldset style="padding:0px 3px 3px 0px">
+                   <legend style="color:#726969;font-family:宋体;font-size:0.98em;">输入面板</legend>
+                   <table width="100%" height="100" border="1" align="center" cellpadding="0" cellspacing="0">
+                          <tr align="center" > 
+                           <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('/')" align="center">/</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('*')" align="center">*</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('-')" align="center">-</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('+')" align="center">+</td>
+                        </tr>
+                        <tr align="center" >
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('7')" align="center">7</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('8')" align="center">8</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('9')" align="center">9</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr(',')"  align="center">,</td>
+                        </tr>
+                        <tr align="center" >
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('4')" align="center">4</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('5')" align="center">5</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('6')" align="center">6</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('%')" align="center">%</td>
+                        </tr>
+                          <tr align="center" >
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('1')"  align="center">1</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('2')"  align="center">2</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('3')"  align="center">3</td>
+                              <td width="40" height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="clearOne()" align="center">←</td>
+                           </tr>
+                        <tr align="center" >
+                              <td  height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('0')" align="center">0 </td>
+                              <td  height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('.')"  align="center">. </td>
+                              <td  height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr('(')"  align="center">( </td>
+                              <td  height="30" bgcolor="#e2dede" style="cursor:hand" onMouseOver="mousemo()" onMouseOut="mousemu()" onClick="inputStr(')')"  align="center">) </td>
+                        </tr>
+                     </table>
+                 </fieldset>
+                 <fieldset style="padding:0px 3px 3px 0px;text-align:center">
+                   <legend style="color:#726969;font-family:宋体;font-size:0.98em;">函数列表</legend>
+                   <table style="width: 100%;" border="0">
+                    <tr>
+                        <td   border="0"><p class="line" align="center">
+                          <input name="b_max" type="button" id="b_max2" title="插入max()函数" onClick="input('max')" value="max">&nbsp;
+                          <input name="b_min" type="button"  id="b_min2" title="插入min()函数" onClick="input('min')" value="min">&nbsp;
+                          <input name="b_fil" type="button" id="b_fil2" title="插入fil()函数" onClick="input('fil')" value="fil">
+                          </p></td>
+                        </tr>
+                        <tr>
+                        <td  border="0"><p class="line" align="center">
+                          <input name="b_abs" type="button" id="b_abs2" title="插入abs()函数" onClick="input('abs')" value="abs">&nbsp;
+                          <input name="b_sgn" type="button" id="b_sgn2" title="插入sgn()函数" onClick="input('sgn')" value="sgn">&nbsp;
+                          <input name="b_grd" type="button" id="b_grd2" title="插入grd()函数" onClick="input('grd')" value="grd">
+                          </p></td>
+                        </tr>
+                        <tr>
+                        <td  border="0"><p class="line" align="center">
+                          <input name="b_psg" type="button"  id="b_psg2" title="插入psg()函数" onClick="input('psg')" value="psg">&nbsp;
+                          <input name="b_int" type="button"  id="b_int2" title="插入int()函数" onClick="input('int')" value="int">&nbsp;
+                          <input name="b_lmt" type="button"  id="b_lmt2" title="插入lmt()函数" onClick="input('lmt')" value="lmt">
+                          </p></td>
+                        </tr>
+                      </table>
+                 </fieldset>
+                 <fieldset style="padding:0px 3px 3px 0px;text-align:center">
+                   <legend style="color:#726969;font-family:宋体;font-size:0.98em;">函数列表</legend>
+                   <table border="0" width="100%">
+                     <tr>
+                        <td height="20"> <div align="center">
+                           <input name="s_rank" type="button" style="cursor:hand;width:30%" id="s_rank" title="插入RANK()函数" onClick="inputFun('RANK')" value="RANK">
+                           <input name="s_vmax" type="button" style="cursor:hand;width:30%" id="s_vmax" title="插入VMAX()函数" onClick="inputFun('VMAX')" value="VMAX">
+                           <input name="s_vmin" type="button" style="cursor:hand;width:30%" id="s_vmin" title="插入VMIN()函数" onClick="inputFun('VMIN')" value="VMIN">
+                          </div></td>
+                      </tr>
+                      <tr>
+                        <td height="20"> <div align="center">
+                           <input name="s_vsum" type="button" style="cursor:hand;width:30%" id="s_vsum" title="插入VSUM()函数" onClick="inputFun('VSUM')" value="VSUM">
+                           <input name="s_vcnt" type="button" style="cursor:hand;width:30%" id="s_vcnt" title="插入VCNT()函数" onClick="inputFun('VCNT')" value="VCNT">
+                           <input name="s_vavg" type="button" style="cursor:hand;width:30%" id="s_vavg" title="插入VAVG()函数" onClick="inputFun('VAVG')" value="VAVG">
+                          </div></td>
+                      </tr>
+                      <tr>
+                        <td  height="20"> <div align="center">
+                           <input name="s_vsum" type="button" style="cursor:hand;width:30%" id="s_vsum" title="插入VSQL()函数" onClick="inputFun('VSQL')" value="VSQL">
+                           <input name="s_vcnt" type="button" style="cursor:hand;width:30%" id="s_vcnt" title="插入LSQL()函数" onClick="inputFun('LSQL')" value="LSQL">
+                           <input name="s_vavg" type="button" style="cursor:hand;width:30%" id="s_vavg" title="插入RSQL()函数" onClick="inputFun('RSQL')" value="RSQL">
+                          </div></td>
+                       </tr>
+                      </table>
+                 </fieldset>
+    `;
+
+
+    Ext.onReady(function () {
+        new Ext.form.FieldSet({
+            renderTo:Ext.getBody(),
+            xtype: 'fieldset', 
+            layout:"column",
+            margin:20,
+            title: '指标信息',
+            autoHeight: true, 
+            defaultType: 'textfield',
+            items: [
+                { fieldLabel: '指标号',name:'id',value:'123',margin:'0 10px 5px 0'},
+                { fieldLabel: '指标名',name:'number',margin:'0 10px 5px 0'},
+                { fieldLabel: '数据来源' ,margin:'0 10px 5px 0'},
+                { fieldLabel: '指标名',margin:'0 10px 5px 0'},
+                { fieldLabel: '是否有标准值',xtype:'combo',store : status_store,editable:false,margin:'0 10px 5px 0'},
+                { fieldLabel: '评测方式',xtype:'combo',store : type,editable:false,margin:'0 10px 5px 0'},
+                { fieldLabel: '指标单位',xtype:'combo',store : type,editable:false,margin:'0 10px 5px 0'},
+                { fieldLabel: '评分机构',xtype:'combo',store : type,editable:false,margin:'0 10px 5px 0'},
+            ]
+        })
+
+        new Ext.form.FieldSet({
+            renderTo:Ext.getBody(),
+            columnWidth: .5,
+            xtype: 'fieldset', 
+            margin:20,
+            layout:"anchor",
+            title: '公式配置',
+            autoHeight: true, 
+            defaultType: 'textfield',
+            frame: true,
+            items:[
+                {name:'formula',xtype:'textarea',id:'gongshi',value:'',width:'100%',},
+                {xtype:'form',border:0,items:[
+                    {name:'formula',xtype:'button',text:'插入公式',margin:'5px',handler:function(){
+                        insert()
+                    }},
+                    {name:'formula',xtype:'button',margin:'5px',text:'校验公式',handler:function(){
+                        doCheck()
+                    }},
+                    {name:'formula',xtype:'button',margin:'5px',text:'清除公式',handler:function(){
+                        doClear()
+                    }},
+                    {name:'formula',xtype:'button',margin:'5px',text:'保存公式',handler:function(){
+                        ProductSubmit()
+                    }},
+                ]},
+                {xtype:'form',layout:'column',items:[
+                        {xtype:'form',columnWidth: .8,html:'<div>我是test</div>'},
+                        {xtype:'form',columnWidth: .2,html:calculators,width:200}
+                    ]
+                }
+            ],
+        })
+    })  
+</script>
+
