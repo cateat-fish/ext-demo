@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script src="./js.js"></script>
+    <title></title>
+</head>
+<link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+</link>
+<script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+<script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+
+</link>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    var server = "http://192.168.3.79:11301";
+
+    var mainStationStore = new Ext.data.Store({
+        autoLoad: false,  
+        proxy: {  
+            type: 'ajax',  
+            url:  server+"/nh-bank/cp/sys/list", 
+            getMethod: function(){ return 'GET'; },//亮点，设置请求方式,默认为GET  
+            reader: {  
+                type: 'json',  
+                root: 'result.list',  
+                totalProperty: 'totalCount'  
+            }  
+        },   
+        listeners: {  
+            'beforeload': function (store, op, options) {  
+                var params = {};  
+                Ext.apply(store.proxy.extraParams, params);   
+            }  
+        } 
+    })
+
+
+    var applicationStore =  new Ext.data.Store({
+        fields: ['value', 'name'],
+        data : [
+            {"value":4, "name":"xx"},
+            {"value":5, "name":"ad"},
+            {"value":6, "name":"dd"},
+            {"value":7,"name":"ff"}
+        ]
+    });
+
+    var ss;
+
+var addOfficerField = Ext.create("Ext.form.FieldSet", {
+	height : 420,
+	width : 350,
+    renderTo:Ext.getBody(),
+	border:false,
+	layout : "column",
+	items : [{
+		xtype:'combobox',
+        displayField: 'name',
+        valueField: 'code',
+        id:"firstC",
+		editable: false,
+		margin : '10 20 10 0',
+		columnWidth :1,
+		fieldLabel : '主站id<span style="color:red">*</span>',
+		labelAlign:"right",
+		store: mainStationStore,
+		listeners: {
+			select : function(combo, record, index){
+                var value = record.data.auth_json;
+                if(typeof(value) == 'string'){
+                    value = JSON.parse(value)
+                }
+                var arr = [];
+                arr[0] = value;
+                var newarr = new Ext.data.Store({
+                    fields: ['user', 'role'],
+                    data : arr
+                });
+                Ext.getCmp("addstationId").clearValue();
+                Ext.getCmp("addstationId").bindStore(newarr)  //applicationStore
+            }
+        },
+		triggerAction: 'all',
+		blankText: '主站id不能为空',
+		allowBlank: false,
+		emptyText: "--必选，请选择--",
+		id:'addmainStationId'
+	},{
+		xtype:'combobox',
+		editable: false,
+		margin : '10 20 10 0',
+		columnWidth :1,
+		fieldLabel : '厂站id',
+		labelAlign:"right",
+		listeners: {
+            click:function(combo, record, index){
+                console.log(record)
+            }
+        },
+		triggerAction: 'all',
+		displayField: "user", 
+		valueField: "role", 
+		emptyText: "--可选，请选择--",
+		id:'addstationId'
+	}]
+});
+    Ext.onReady(function () {
+
+
+    })  
+</script>

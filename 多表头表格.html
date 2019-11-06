@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<title>管理员列表</title>
+	</head>
+	<style>
+		body{width: 100%}
+		#noborder-triggerWrap{border: none}
+		#noborder-inputEl{font-size: 20px}
+		.floatR{float:right;width: 200px}
+		.x-form-trigger-wrap-default{border: none}
+	</style>
+	<script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+	<script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+	<link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css"></link>
+	<!-- <script type="text/javascript" src="/web/resource/js/app.js"></script> -->
+	<script src="./js.js"></script>
+	<script type="text/javascript">
+		var comboxStore;
+
+		//设置ComboBox列表数据源参数
+		// comboxStore = Ext.create('Ext.data.Store', {
+		// 	fields : [ 'name', 'kid' ],
+		// 	autoLoad : true,
+		// 	pageSize : 15,
+		// 	sorters : {
+		// 		property : 'name',
+		// 		direction : 'ASC'
+		// 	},
+		// 	proxy : {
+		// 		type : "ajax",
+		// 		url : getServerHttp() +"/cp/role_cp/list_data_combox",
+		// 		reader : {
+		// 			type : 'json',
+		// 			root : 'list',
+		// 			totalProperty : 'page.rowTotal'
+		// 		}
+		// 	}
+		// }); //#comboxStore
+	</script>
+	<script type="text/javascript">
+		var dataStore;
+		dataStore = Ext.create('Ext.data.Store', {
+			autoLoad : true,
+			pageSize : 15,
+			proxy : {
+				type : "ajax",
+				// url : getServerHttp() +"/farm-cp/sinvescheck/list",
+				actionMethods : {
+					read : 'GET' // Store设置请求的方法，与Ajax请求有区别
+				},
+				reader : {
+					type : 'json',
+					rootProperty : 'data',// 数据(不配置的话无法接收数据)，返回的key为data
+					root : 'result.list',
+					totalProperty : 'result.pagination.total'
+				}
+			},
+			listeners : {
+				'beforeload' : function(store, op, options) {
+					var params = queryFormPanel.getForm().getValues();
+					Ext.apply(dataStore.proxy.extraParams, params);
+				}
+			}
+		}); //#dataStore
+		
+		
+		var queryFormPanel = Ext.create('Ext.form.Panel', {
+		width:"100%",
+		frame : true,
+		
+		style : {marginBottom : '5px'},
+		bodyStyle : {padding: '10px'},
+		buttonAlign : "center",
+		
+		defaultType : "textfield",
+		items : [ 
+			{
+				xtype : "container",
+				layout : "hbox",
+				items : [ 
+					{xtype : "textfield",fieldLabel:"搜索", emptyText:"搜索...",name : "srh.userId",margin:"10px"},
+					{xtype : "combobox",id:"noborder",fieldCls: 'noborder',cls: 'floatR',
+					listeners:{
+						select:function(combo,record,opts) { 
+							var value = record.data.field1;
+							if(value === '短期投资清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/dqtz/dqtz_list.html'
+							}
+							if(value === '应收款项清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/yskx/yskx_list.html'
+							}
+							if(value === '库存物资清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/kcwz/kcwz_list.html'
+							}
+					
+							if(value === '林木资产清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/lmzc/lmzc_list.html'
+							}
+							if(value === '牲畜(禽)资产清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/sczc/sczc_list.html'
+							}
+							if(value === '长期投资清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/cqtz/cqtz_list.html'
+							}
+							if(value === '固定资产清查登记表_1（经营性）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/gdzc1/gdzc1_list.html'
+							}
+							if(value === '固定资产清查登记表_2（非经营性）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/gdzc2/gdzc2_list.html'
+							}
+							if(value === '在建工程清查登记表_1（经营性）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zjgc1/zjgc1_list.html'
+							}
+							if(value === '在建工程清查登记表_2（非经营性）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zjgc2/zjgc2_list.html'
+							}
+							if(value === '无形资产清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/wxzc/wxzc_list.html'
+							}
+					
+							if(value === '货币资金清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/hbzj/hbzj_list.html'
+							}
+							if(value === '短期借款清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/dqjk/dqjk_list.html'
+							}
+							if(value === '应付款项清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/yfkx/yfkx_list.html'
+							}
+							if(value === '长期借款及应付款清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/cqjk/cqjk_list.html'
+							}
+							if(value === '应付工资清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/yfgz/yfgz_list.html'
+							}
+							if(value === '应付福利费清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/yffl/yffl_list.html'
+							}
+							if(value === '一事一议资金清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/ysyy/ysyy_list.html'
+							}
+						
+							if(value === '专项应付款清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zxyfk/zxyfk_list.html'
+							}
+							if(value === '所有者权益清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/syzqy/syzqy_list.html'
+							}
+							if(value === '待界定资产清查登记表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/djdzc/djdzc_list.html'
+							}
+							if(value === '资源性资产清查登记明细表_1（农用地明细）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zyxzc1/zyxzc1_list.html'
+							}
+							if(value === '资源性资产清查登记明细表_2（建设用地明细）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zyxzc2/zyxzc2_list.html'
+							}
+							if(value === '资源性资产清查登记明细表_3（未利用地、林木明细）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zyxzc3/zyxzc3_list.html'
+							}
+							
+							if(value === '资产负债表（组织类）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zcfzzz/zcfzzz_list.html'
+							}
+							if(value === '资产负债表（全资企业类）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zcfzqy/zcfzqy_list.html'
+							}
+							if(value === '资产负债表（合并报表）'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zcfzhb/zcfzhb_list.html'
+							}
+							if(value === '资源性资产清查登记总表'){
+								window.location.href='/web/modules/farm-cp/view_cp/property_check/check_register/zyxzczb/zyxzczb_list.html'
+							}
+							
+
+
+						}  
+					},
+					name : "parentBranch",
+					store : ['请选择表格', '货币资金清查登记表','短期投资清查登记表','应收款项清查登记表','存物资清查登记表','牲畜(禽)资产清查登记表','林木资产清查登记表','长期投资清查登记表','固定资产清查登记表_1（经营性）','固定资产清查登记表_2（非经营性）',
+					'在建工程清查登记表_1（经营性）','在建工程清查登记表_2（非经营性）','无形资产清查登记表','短期借款清查登记表',' 应付款项清查登记表',
+					'长期借款及应付款清查登记表','应付工资清查登记表','应付福利费清查登记表','一事一议资金清查登记表','专项应付款清查登记表','所有者权益清查登记表','待界定资产清查登记表','资源性资产清查登记明细表_1（农用地明细）',
+					'资源性资产清查登记明细表_2（建设用地明细）','资源性资产清查登记明细表_3（未利用地、林木明细）','资产负债表（组织类）','资产负债表（全资企业类）','资产负债表（合并报表）','资源性资产清查登记总表',],value : "请选择表格",width:"20%"},
+					
+				],
+                
+			},
+            
+       
+			
+		],
+		
+	}); //#searchFormPanel
+
+
+	var listGridPanel1 = Ext.create('Ext.grid.Panel', {
+			
+		title : "表2 短期投资清查登记表",
+			
+			buttons : [ 
+				{
+				
+					text : "导入并校验",
+					// icon : jcapp.getIcon("add.png"),
+					handler : function() {
+						// Myimp();
+					}
+				},{
+				
+				text : "导出全部",
+				// icon : jcapp.getIcon("add.png"),
+				handler : function() {
+					grid2Excel(listGridPanel,"表2 短期投资清查登记表"); 
+				}
+				},{
+				
+				text : "新增",
+				// icon : jcapp.getIcon("add.png"),
+				handler : function() {
+					myAdd();
+				}
+				},
+                {
+				
+				text : "切换数值单位",
+				// icon : jcapp.getIcon("add.png"),
+				handler : function() {
+					
+				}
+			},{
+				
+				text : "清空",
+				// icon : jcapp.getIcon("add.png"),
+				handler : function() {
+					
+				}
+			},{
+				
+				text : "打印",
+				// icon : jcapp.getIcon("add.png"),
+				handler : function() {
+					
+				}
+			}
+			
+			],
+		 
+		});
+
+
+
+
+		var listGridPanel = Ext.create('Ext.grid.Panel', {
+			
+           
+			dockedItems : [ 
+				{
+					xtype : 'pagingtoolbar',
+					store : dataStore, // same store GridPanel is using
+					dock : 'bottom',
+					displayInfo : true
+				} 
+			],
+			store : dataStore,
+			columns : [ 
+			{
+				text : '序号',
+				style : "text-align:center;",
+				dataIndex : 'id',
+				align : 'center',
+				width:100,
+				
+			},{
+				text : '投资对象',
+				style : "text-align:center;",
+				dataIndex : 'object',
+				align : 'center',
+				width:100,
+				
+			},{
+				text : '投资时间',
+				style : "text-align:center;",
+				dataIndex : 'date',
+				align : 'center',
+				width:100,
+				
+			},{
+				text : '投资期限',
+				style : "text-align:center;",
+				dataIndex : 'timelimit',
+				align : 'center',
+				width:100,
+				
+			},
+            {
+				header:'账面数',
+				columns:[
+                {
+						text : '合计',
+						style : "text-align:center;",
+						dataIndex : 'amount',
+						align : 'center',
+						editor:{xtype: 'numberfield'},
+						width:100,
+						//locked:true,
+					},
+						{
+						text : '出资形式',
+						style : "text-align:center;",
+						dataIndex : 'email',
+						align : 'center',
+						editor:{xtype: 'textfield'},
+						width:100,
+                        columns:[
+                         {
+                            text : '货币资金',
+						style : "text-align:center;",
+						dataIndex : 'cash',
+						align : 'center',
+						editor:{xtype: 'textfield'},
+						width:100,
+                         }, {
+                            text : '实物折价',
+						style : "text-align:center;",
+						dataIndex : 'nocount',
+						align : 'center',
+						editor:{xtype: 'textfield'},
+						width:100,
+                         }
+                     ]
+                    
+					},
+				]
+			},
+           
+            {
+				header:'清查核实',
+				columns:[
+						{
+						text : '增加+',
+						style : "text-align:center;",
+						dataIndex : 'inadd',
+						align : 'center',
+						editor:{xtype: 'textfield'},
+						width:100,
+                       
+					},{
+						text : '减少-',
+						style : "text-align:center;",
+						dataIndex : 'reduce',
+						align : 'center',
+						editor:{xtype: 'textfield'},
+						width:100,
+                        
+					},
+				]
+			},
+            {
+				text : '核实数',
+				style : "text-align:center;",
+				dataIndex : 'verfynum',
+				align : 'center',
+				width:100,
+				
+			},{
+				text : '备注',
+				width:300,
+				style : "text-align:center;",
+				dataIndex : 'remark',
+				
+			}
+            
+,{xtype : "actioncolumn",align : "center",text : '操作',
+				items : [ 
+					{xtype : 'button',tooltip : '编辑',
+					//icon : jcapp.getIcon("application_form_edit.png"),
+						handler : function(grid, rowIndex, colIndex) {
+							var rec = grid.getStore().getAt(rowIndex);
+							myEdit(rec.get('id'));
+						}
+					},
+					{xtype : "container"},
+					{xtype : 'button',tooltip : '删除',
+					// icon : jcapp.getIcon("cross.png"),
+						handler : function(grid, rowIndex, colIndex) {
+							var rec = grid.getStore().getAt(rowIndex);
+							myDel(rec.get('id'));
+						}
+					} 
+				]
+			}
+            ]
+		});
+        var queryFormPanel1 = Ext.create('Ext.form.Panel', {
+		width:"100%",
+		frame : true,
+		
+		style : {marginBottom : '5px'},
+		bodyStyle : {padding: '10px'},
+		buttonAlign : "center",
+		
+		defaultType : "textfield",
+		items : [ 
+			{
+				xtype : "container",
+				layout : "hbox",
+				items : [ 
+					{xtype : "textfield", emptyText:"平衡关系：7=8+9 12=7+10-11",margin:"10px",readOnly:'true',width:"100%"},
+					
+					
+				],
+				// buttons : [ 
+					
+				// ]
+			},
+			
+		],
+		
+	}); //#searchFormPanel
+		Ext.onReady(function() {
+			
+			queryFormPanel.render(Ext.getBody());
+			listGridPanel1.render(Ext.getBody());
+			listGridPanel.render(Ext.getBody());
+            queryFormPanel1.render(Ext.getBody());
+		});
+
+	
+       
+		
+        function myDel(id) {
+			
+			Ext.Msg.confirm("提示:", "确定删除选定的记录?", function(e) {
+				if (e == "yes") {
+					
+					Ext.Ajax.request({
+						url : getServerHttp() +"/farm-cp/sinvescheck/delete?id=" + id,
+						success : function(response) {
+							
+							var json = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert("提示", json.result);
+							dataStore.load();
+						},
+						failure : function(response) {
+							
+							Ext.Msg.alert("提示", "删除失败");
+						}
+					});
+				}//#if
+			});
+		
+		}//#myDel
+
+	</script>
+	<!-- <script type="text/javascript" src="add.js"></script>
+	<script type="text/javascript" src="edit.js"></script> -->
+	
+    <body>
+    
+    </body> 
+</html>
+

@@ -1,0 +1,204 @@
+
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <title></title>
+    </head>
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <!-- <script src="./add.js"></script> -->
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css"></link>
+    <!-- <script type="text/javascript" src="/web/resource/js/app.js"></script>
+    <script type="text/javascript" src="/web/resource/js/time/time.js"></script> -->
+        <body>
+        
+        </body> 
+</html>
+<script>
+    Ext.onReady(function(){  
+        var top = new Ext.FormPanel({  
+            //labelAlign: 'top',  
+            labelAlign:'left',  
+            frame:true,  
+            bodyStyle:'padding:5px 5px 0',  
+            width: 1200,  
+            items: [{  
+                layout:'column',  
+                items:[
+                    {  
+                        columnWidth:.2,  
+                        layout: 'form',  
+                        items: [
+                            {xtype:'textfield',fieldLabel: 'aaa1:', name: 'first',  anchor:'95%'}, 
+                            {xtype:'textfield',fieldLabel: 'aaa2',name: 'company',anchor:'95%'},
+                            {xtype:'textfield',fieldLabel: 'aaa3',name: 'company2',anchor:'95%'}  
+                        ]  
+                    },
+                    {  
+                        columnWidth:.2,  
+                        layout: 'form',  
+                        items: [
+                            {xtype:'textfield',fieldLabel: 'aaa4:', name: 'first',  anchor:'95%'}, 
+                            {xtype:'textfield',fieldLabel: 'aaa5',name: 'company',anchor:'95%'},
+                            {xtype:'textfield',fieldLabel: 'aaa6',name: 'company2',anchor:'95%'}  
+                        ]  
+                    },
+                    {  
+                        columnWidth:.2,  
+                        layout: 'form',  
+                        items: [
+                            {xtype:'textfield',fieldLabel: 'aaa7:', name: 'first',  anchor:'95%'}, 
+                            {xtype:'textfield',fieldLabel: 'aaa8',name: 'company',anchor:'95%'},
+                            {xtype:'textfield',fieldLabel: 'aaa9',name: 'company2',anchor:'95%'}  
+                        ]  
+                    },
+                ],  
+            }]  
+        })  
+        top.render(document.body);  
+
+
+
+
+        getKid('123')
+
+
+
+
+
+
+
+
+        function getServerHttp(){
+	return "http://127.0.0.1:8080"
+}
+
+function getKid(kid){
+    console.log(kid)
+}
+
+var add_form_panel = new Ext.form.FormPanel({
+	url : getServerHttp() +"/farm-cp/cp/assets/add",
+    buttonAlign : "center",
+    labelAlign:'left',
+    frame:true,  
+    width: 1200,
+	items: [{  
+            layout:'column',  
+            items:[
+                {  
+                    columnWidth:.3,  
+                    layout: 'form',  
+                    items: [
+                        {xtype:'textfield',fieldLabel : "资产编码",name : "houseId",allowBlank : false,anchor:'95%'  },
+                        {xtype:'textfield',fieldLabel : "资产名称",name : 'houseName',allowBlank : false,anchor:'95%'  },
+                        {xtype:'textfield',fieldLabel : "资产类别",name : 'houseType',allowBlank : false,anchor:'95%'  },
+                        {xtype:'textfield',fieldLabel : "编制日期",name : 'today',allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "构（购）建时间",name : "constructionTime",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "坐落位置",name : "location",allowBlank : false,anchor:'95%'},
+                        
+                    ]
+                },
+                {
+                    columnWidth:.3,  
+                    layout: 'form', 
+                    items:[
+                        {xtype:'textfield',fieldLabel : "资产卡片借方",name : "assetCardDebit ",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "资产卡片贷方",name : "assetCardCredit ",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "折旧借方",name : "depreciationDebit ",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "折旧贷方",name : "depreciatedCreditor ",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "建筑结构",name : "buildingStructure",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "产证登记建筑面积（㎡）",name : "gradeBuildingArea",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "责任人",name : "personLiable",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "备注",name : "remarks",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "平面图附件",name : "planeDrawingAccessories ",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "实物图附件",name : "annexToPhysicalDrawings ",allowBlank : false,anchor:'95%'},
+                    ]
+                },
+                {
+                    columnWidth:.4,  
+                    layout: 'form', 
+                    items:[
+                    {fieldLabel : "资源性质",allowBlank : false,anchor:'100%',
+                            xtype : "radiogroup",
+                            value : 1,
+                            items : [ 
+                                {boxLabel : "经营性资产",name : "management",checked : true,inputValue : "1"},
+                                {boxLabel : "非经营性资产",name : "management",inputValue : "2"},
+                                
+                            ]
+                        },
+                        {xtype:'textfield',fieldLabel : "产业结构",allowBlank : false,anchor:'100%',
+                            xtype : "radiogroup",
+                            value : 1,
+                            items : [ 
+                                {boxLabel : "经营性一产",name : "industrialStructure",checked : true,inputValue : "00"},
+                                {boxLabel : "经营性二产",name : "industrialStructure",inputValue : "01"},
+                                {boxLabel : "经营性三产",name : "industrialStructure",inputValue : "02"},
+                                
+                            ]
+                        },
+                        {fieldLabel : "资产用途",allowBlank : false,anchor:'95%',
+                            xtype : "radiogroup",
+                            value : 1,
+                            items : [ 
+                                {boxLabel : "农业用房",name : "useOfAssets",checked : true,inputValue : "00"},
+                                {boxLabel : "养殖用房",name : "useOfAssets",inputValue : "01"},
+                                {boxLabel : "设施大棚",name : "useOfAssets",inputValue : "03"},
+                                {boxLabel : "其他",name : "useOfAssets",inputValue : "04"},
+                            ]
+                        },
+                        {xtype:'textfield',fieldLabel : "建筑面积（㎡）",name : "builtUpArea",allowBlank : false,anchor:'95%'},
+                        {fieldLabel : "使用状态",allowBlank : false,anchor:'95%',
+                            xtype : "radiogroup",
+                            value : 1,
+                            items : [ 
+                                {boxLabel : "自用",name : "useStatus",checked : true,inputValue : "00"},
+                                {boxLabel : "闲置",name : "useStatus",inputValue : "01"},
+                                {boxLabel : "出租或出售",name : "useStatus",inputValue : "03"},
+                                {boxLabel : "其他",name : "useStatus",inputValue : "04"},
+                            ]
+                        },
+                        {xtype:'textfield',fieldLabel : "原值（元）",name : "price",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "预计使用期数(月)",name : "yearsOfUse",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "预计净残值",name : "residualRate",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "已使用期数(月)",name : "yearsOfUseful ",allowBlank : false,anchor:'95%'},
+                        {xtype:'textfield',fieldLabel : "已提折旧（元）",name : "depreciation",allowBlank : false,anchor:'95%'},
+                    ]
+                },
+               
+            ],
+		}
+    ],
+    buttons: [{
+        text: '提交',
+        handler: function () {
+            // var value = add_form_panel.getForm().getValues();
+            // console.log(value)
+            add_form_panel.getForm().submit({
+                        function(res){
+                            console.log(res)
+                        },
+                        fail(err){
+                            console.log(err)
+                        }
+                    });
+        }
+    }]
+});
+
+var add_form_panel_win = Ext.create("Ext.Window", {title : "机构添加",closeAction : "hide",items : add_form_panel});
+
+function myAdd() {
+    add_form_panel.getForm().reset();
+	add_form_panel_win.show();
+}
+add_form_panel_win.show();
+})  
+</script>

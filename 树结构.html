@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title></title>
+</head>
+<link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+</link>
+<script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+<script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+
+</link>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    Ext.onReady(function () {
+
+        var dataStore = Ext.create('Ext.data.TreeStore', {
+            data: [{
+                "text": "路家村镇",expanded:true,
+                "children": [
+                    { "text": "河源村",expanded:true, "children": [] },
+                    { "text": "皇后村", expanded:true,"children": [] },
+                    { "text": "滴水崖",expanded:true, "children": [] },
+                    { "text": "路家村", expanded:true,"children": [] },
+                ]
+            }],
+            root: {
+                text: '组织结构',
+                expanded:true,
+            },
+        })
+        var panel = Ext.create("Ext.form.Panel", {
+            store: dataStore,
+            width: "100%",
+            title: "经济组织管理",
+            bodyStyle: "padding:10px 10px 10px 10px",
+            rootVisible: false,
+            animCollapse: true,
+            autoScroll: true,
+            animate: true,
+            labelAlign: "center",
+            renderTo: Ext.getBody(),
+            items: [{
+                autoHeight: true,
+                layout: "column",
+                items: [{
+                    columnWidth: .2,
+                    xtype: "fieldset",
+                    title: "组织结构",
+                    layout: "form",
+                    style: "margin-left: 2px;padding-left:5px",
+                    fieldDefaults: {
+                        labelWidth: 70,
+                        labelAlign: "left"
+                    },
+                    items: [
+                        { xtype: "treepanel", store: dataStore, 
+                            listeners:{ 
+                                itemclick : function(node, event){  
+                                    if(!event.data.root){
+                                        var id = event.data.id ;
+                                        console.log(event.data)
+                                    }
+                                }
+                            }
+                        },
+                    ]
+                }, {
+                    columnWidth: .8,
+                    xtype: "fieldset",
+                    title: "组织数据",
+                    layout: "form",
+                    style: "margin-left: 5px;padding-left:5px",
+                    fieldDefaults: {
+                        labelWidth: 70,
+                        labelAlign: "left"
+                    },
+                    items: [
+                        {
+                            xtype: "grid", title: '省份列表',
+                            tbar: [
+                                { text: "添加" },
+                            ],
+                            columns: [
+                                {
+                                    text: '序号',
+                                    dataIndex: 'code',
+                                    flex: 1
+                                }, {
+                                    text: '编码',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '编码',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '统一社会信用代码',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '集体经济组织名称',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '法人代表',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '登记时间',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '成立时间',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    text: '所属机构',
+                                    dataIndex: 'name',
+                                    flex: 1
+                                }, {
+                                    xtype: "actioncolumn",
+                                    align: "center",
+                                    text: '操作',
+                                    flex: 1,
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            tooltip: '编辑',
+
+                                            handler: function (grid, rowIndex, colIndex) {
+                                                var rec = grid.getStore().getAt(rowIndex);
+                                                //alert("编辑 " + rec.get('kid'));
+                                                myEdit(rec.get('kid'));
+                                                dataStore.load();
+                                            }
+                                        }, {
+                                            xtype: "container"
+                                        }, {
+                                            xtype: 'button',
+                                            tooltip: '删除',
+                                            handler: function (grid, rowIndex, colIndex) {
+                                                var rec = grid.getStore().getAt(rowIndex);
+                                                myDel(rec.get('kid'));
+                                                dataStore.load();
+                                            }
+                                        }
+                                    ],
+                                    viewConfig: {
+                                        enableTextSelection: true
+                                    }
+                                }
+
+                            ]
+                        }
+                    ]
+                }]
+            }],
+        });
+    })  
+</script>

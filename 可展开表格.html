@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title></title>
+</head>
+<link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+</link>
+<script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+<script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+
+</link>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    Ext.onReady(function () {
+        var store = Ext.create('Ext.data.Store', {
+    storeId:'employeeStore',
+    fields:['name', 'seniority', 'department'],
+    groupField: 'department',
+    data: {'employees':[
+        { "name": "Michael Scott",  "seniority": 7, "department": "Management" },
+        { "name": "Dwight Schrute", "seniority": 2, "department": "Sales" },
+        { "name": "Jim Halpert",    "seniority": 3, "department": "Sales" },
+        { "name": "Kevin Malone",   "seniority": 4, "department": "Accounting" },
+        { "name": "Angela Martin",  "seniority": 5, "department": "Accounting" }
+    ]},
+    proxy: {
+        type: 'memory',
+        reader: {
+            type: 'json',
+            root: 'employees'
+        }
+    }
+});
+
+Ext.create('Ext.grid.Panel', {
+    title: 'Employees',
+    store: Ext.data.StoreManager.lookup('employeeStore'),
+    columns: [
+        { header: 'Name',     dataIndex: 'name' ,width:"50%"},
+        { header: 'Seniority', dataIndex: 'seniority',width:"50%" }
+    ],
+    features: [{ftype:'grouping'}],
+    width: 600,
+    height: 375,
+    renderTo: Ext.getBody()
+});
+    })  
+</script>

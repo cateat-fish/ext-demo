@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>管理员列表</title>
+</head>
+<script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+<script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+<link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+</link>
+<script src="./js.js"></script>
+<script type="text/javascript">
+    var comboxStore;
+
+		//设置ComboBox列表数据源参数
+		// comboxStore = Ext.create('Ext.data.Store', {
+		// 	fields : [ 'name', 'kid' ],
+		// 	autoLoad : true,
+		// 	pageSize : 15,
+		// 	sorters : {
+		// 		property : 'name',
+		// 		direction : 'ASC'
+		// 	},
+		// 	proxy : {
+		// 		type : "ajax",
+		// 		url : getServerHttp() +"/cp/role_cp/list_data_combox",
+		// 		reader : {
+		// 			type : 'json',
+		// 			root : 'list',
+		// 			totalProperty : 'page.rowTotal'
+		// 		}
+		// 	}
+		// }); //#comboxStore
+</script>
+<script type="text/javascript">
+    var dataStore;
+    dataStore = Ext.create('Ext.data.Store', {
+        // autoLoad: true,
+        fields: ['id', 'remark'],
+        data: [
+            { id: 1, remark: 'Pending' ,img:'https://www.baidu.com/img/xinshouyedong_4f93b2577f07c164ae8efa0412dd6808.gif'},
+            { id: 2, remark: 'Open',img:'https://www.baidu.com/img/xinshouyedong_4f93b2577f07c164ae8efa0412dd6808.gif' },
+            { id: 3, remark: 'Closed',img:'https://www.baidu.com/img/xinshouyedong_4f93b2577f07c164ae8efa0412dd6808.gif' }
+        ]
+    }); //#dataStore
+
+    var listGridPanel1 = Ext.create('Ext.grid.Panel', {
+        title: "表2 短期投资清查登记表",
+        buttons: [
+            {
+                text: "导入并校验",
+                handler: function () {
+                    // Myimp();
+                }
+            }, {
+
+                text: "导出全部",
+                // icon : jcapp.getIcon("add.png"),
+                handler: function () {
+                    grid2Excel(listGridPanel, "表2 短期投资清查登记表");
+                }
+            }, {
+
+                text: "新增",
+                // icon : jcapp.getIcon("add.png"),
+                handler: function () {
+                    myAdd();
+                }
+            },
+            {
+
+                text: "切换数值单位",
+                // icon : jcapp.getIcon("add.png"),
+                handler: function () {
+
+                }
+            }, {
+
+                text: "清空",
+                // icon : jcapp.getIcon("add.png"),
+                handler: function () {
+
+                }
+            }, {
+
+                text: "打印",
+                // icon : jcapp.getIcon("add.png"),
+                handler: function () {
+
+                }
+            }
+
+        ],
+
+    });
+
+
+
+    var listGridPanel = Ext.create('Ext.grid.Panel', {
+        dockedItems: [
+            {
+                xtype: 'pagingtoolbar',
+                store: dataStore, // same store GridPanel is using
+                dock: 'bottom',
+                displayInfo: true
+            }
+        ],
+        store: dataStore,
+        columns: [
+            {
+                text: '序号',
+                style: "text-align:center;",
+                dataIndex: 'id',
+                align: 'center',
+                width: 100,
+            }, {
+                text: '备注',
+                width: 300,
+                style: "text-align:center;",
+                dataIndex: 'remark',
+
+            }, 
+			{
+                text: '图片',
+                dataIndex: 'img',
+				width:200,
+				renderer : function(value) {
+					console.log(value)
+					// data:image/jpeg;base64,
+					return "<img style='width:80px;display:block' src="+value+" />"
+				}
+            }
+        ]
+    });
+    var queryFormPanel1 = Ext.create('Ext.form.Panel', {
+        width: "100%",
+        frame: true,
+
+        style: { marginBottom: '5px' },
+        bodyStyle: { padding: '10px' },
+        buttonAlign: "center",
+
+        defaultType: "textfield",
+        items: [
+            {
+                xtype: "container",
+                layout: "hbox",
+                items: [
+                    { xtype: "textfield", emptyText: "平衡关系：7=8+9 12=7+10-11", margin: "10px", readOnly: 'true', width: "100%" },
+
+
+                ],
+            },
+
+        ],
+
+    }); //#searchFormPanel
+    Ext.onReady(function () {
+
+       // queryFormPanel.render(Ext.getBody());
+        listGridPanel1.render(Ext.getBody());
+        listGridPanel.render(Ext.getBody());
+        queryFormPanel1.render(Ext.getBody());
+    });
+
+
+
+
+
+    function myDel(id) {
+
+        Ext.Msg.confirm("提示:", "确定删除选定的记录?", function (e) {
+            if (e == "yes") {
+
+                Ext.Ajax.request({
+                    url: getServerHttp() + "/farm-cp/sinvescheck/delete?id=" + id,
+                    success: function (response) {
+
+                        var json = Ext.JSON.decode(response.responseText);
+                        Ext.Msg.alert("提示", json.result);
+                        dataStore.load();
+                    },
+                    failure: function (response) {
+
+                        Ext.Msg.alert("提示", "删除失败");
+                    }
+                });
+            }//#if
+        });
+
+    }//#myDel
+</script>
+<body>
+</body>
+</html>
