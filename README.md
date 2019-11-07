@@ -1,8 +1,11 @@
 # ext-demo
 ext 框架demo
 
++ base-demo
+> 基础demo
+
 + chart-demo
-> highcharts  与 ext 无关的 图表插件
+> highcharts 与 ext 无关的 简易图表插件
 
 + 布局
 > Ext 常见布局
@@ -12,7 +15,10 @@ ext 框架demo
 
 
 
-> 可参考中文文档：http://extjs-doc-cn.github.io/ext4api/#!/api/Ext
-> 其他博客 ：https://blog.csdn.net/ldl22847/article/details/7236474
++ 可参考中文文档：http://extjs-doc-cn.github.io/ext4api/#!/api/Ext
++ 其他博客 ：https://blog.csdn.net/ldl22847/article/details/7236474
 
 
++ 关于 提交代码(pull requests) 
+> 建议 各自姓名拼音（jingbc）为 文件夹名 新建一个README.md 文件 + 提交的代码
+> 参考博客 https://blog.csdn.net/jasonLee_lijiaqi/article/details/80511723
