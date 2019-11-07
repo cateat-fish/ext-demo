@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello-extjs</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+    </link>
+    <script type="text/javascript">
+
+        // 下拉框数据
+        var states = Ext.create('Ext.data.Store', {
+            fields: ['abbr', 'name'],
+            data : [
+                {"abbr":"AL", "name":"Alabama"},
+                {"abbr":"AK", "name":"Alaska"},
+                {"abbr":"AZ", "name":"Arizona"}
+                //...
+            ]
+        });
+
+
+        Ext.onReady(function () {
+            new Ext.form.Panel({
+                title: "form ",
+                renderTo: Ext.getBody(),
+                plain: true,
+                bodyStyle: 'padding:15px',
+                url: 'save-form.php',
+                items:[
+                    {html:'共有属性：name - 字段名，value- 字段值，disabled-表单是否禁用,allowBlank（false）- 验证不能空'},
+                    {
+                        xtype: "form",
+                        // layout:'form',
+                        labelWidth: 30,
+                        defaultType: "textfield",
+                        frame: true,
+                        items:
+                            [
+                                {
+                                    fieldLabel: "文本框",
+                                    name: "username",
+                                    disabled:true,
+                                    allowBlank: false
+                                },
+                                {
+                                    grow      : 'growMax growMin',  //growMax
+                                    name      : 'message',
+                                    fieldLabel: '多行文本框',
+                                    xtype:'textarea',
+                                    // anchor    : '100%'
+                                },
+                                {
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'middle'
+                                    },
+                                    title: '标签域',
+                                    width: 400,
+                                    bodyPadding: 10,
+                                    items: [{
+                                        xtype: 'textfield',
+                                        hideLabel: true,
+                                        flex: 1
+                                    }, {
+                                        xtype: 'label',
+                                        forId: 'myFieldId',
+                                        text: '这真是极好的',
+                                        margin: '0 0 0 10'
+                                    }]
+                                    
+                                },
+                                {
+                                    fieldLabel: '数字文本框',
+                                    xtype:'numberfield',
+                                    // anchor    : '100%'
+                                },
+                                {
+                                    fieldLabel: '文本编辑器',
+                                    xtype:'htmleditor',
+                                    bodyStyle:'border:1px solid #333'
+
+                                },
+                                {
+                                    fieldLabel: "日期",
+                                    xtype: 'datefield',
+                                    name: "datefield",
+                                    allowBlank: false
+                                },
+                                {
+                                    fieldLabel: "日期面板",
+                                    xtype: 'datepicker',
+                                    name: "datefield",
+                                    allowBlank: false
+                                    
+                                },
+                                {
+                                    xtype: 'timefield',
+                                    name: 'in',
+                                    fieldLabel: '时间',
+                                    // minValue: '6:00 AM',    // 最小值
+                                    // maxValue: '8:00 PM',    // 最大值
+                                    // increment: 30,          // 步长
+                                    anchor: '100%'       //
+                                },
+                                {
+                                    xtype: 'fieldcontainer',
+                                    fieldLabel: '多选框',
+                                    defaultType: 'checkboxfield',
+                                    layout:'hbox',
+                                    items: [
+                                        {
+                                            boxLabel  : 'Anchovies',
+                                            name      : 'topping',
+                                            inputValue: '1',
+                                            id        : 'checkbox1'
+                                        }, {
+                                            boxLabel  : 'Artichoke Hearts',
+                                            name      : 'topping',
+                                            inputValue: '2',
+                                            checked   : true,
+                                            margin:'0 10px',
+                                            id        : 'checkbox2'
+                                        }, {
+                                            boxLabel  : 'Bacon',
+                                            name      : 'topping',
+                                            inputValue: '3',
+                                            id        : 'checkbox3'
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'fieldcontainer',
+                                    fieldLabel: '单选框',
+                                    defaultType: 'radiofield',
+                                    layout:'hbox',
+                                    items: [
+                                    {
+                                        boxLabel  : 'M',
+                                        name      : 'size',
+                                        inputValue: 'm',
+                                        id        : 'radio1'
+                                    }, {
+                                        boxLabel  : 'L',
+                                        name      : 'size',
+                                        inputValue: 'l',
+                                        id        : 'radio2',
+                                        margin:'0 10px',
+                                    }, {
+                                        boxLabel  : 'XL',
+                                        name      : 'size',
+                                        inputValue: 'xl',
+                                        id        : 'radio3'
+                                    }
+                                    ]
+                                },
+                                {
+                                    fieldLabel: '下拉框',
+                                    xtype:'combo',
+                                    store: states,
+                                    queryMode: 'local',
+                                    displayField: 'name',
+                                    valueField: 'abbr',
+                                    multiSelect:true,       //多选
+                                    editable:false,         //不可编辑
+                                },
+                                {
+                                    fieldLabel: '进度条',
+                                    xtype:'progressbar',
+                                    width:200,
+                                },
+                                {
+                                    fieldLabel: '滑块',
+                                    xtype:'slider',
+                                    width:500,
+                                    value: 50,
+                                    increment: 10,
+                                    minValue: 0,
+                                    maxValue: 100,
+                                },
+                                // {
+                                //     xtype:'colormenu',
+                                //     fieldLabel: '颜色选择器',
+                                // },
+                                // {
+                                //     xtype:'datemenu',  
+                                //     fieldLabel: '日期选择菜单',
+                                // },
+                                {
+                                    xtype:'fieldset',
+                                    columnWidth: 0.5,
+                                    title: '表单字段组',
+                                    collapsible: true,       //是否隐藏/显示
+                                    defaultType: 'textfield',   // 默认子项 xtype
+                                    defaults: {anchor: '100%'},
+                                    layout: 'anchor',
+                                    items :[{
+                                        fieldLabel: '姓名',
+                                        name: 'name'
+                                    }, {
+                                        fieldLabel: '地址',
+                                        name: 'address'
+                                    }]
+                                }
+                            ]
+                    },
+                ],
+                
+                buttons: [{
+                    text: '重置',
+                    handler: function() {
+                        this.up('form').getForm().reset();
+                    }
+                }, {
+                    text: '保存',
+                    formBind: true, //only enabled once the form is valid
+                    disabled: true,
+                    handler: function() {
+                        var form = this.up('form').getForm();
+                        if (form.isValid()) {
+                            form.submit({
+                                success: function(form, action) {
+                                    Ext.Msg.alert('保存成功', action.response.statusText);
+                                },
+                                failure: function(form, action) {
+                                    Ext.Msg.alert('操作失败', action.response.statusText);
+                                }
+                            });
+                        }
+                    }
+                }],
+            });
+        });  
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
