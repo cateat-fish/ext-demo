@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>hello-extjs</title>
+  <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+  <meta http-equiv="description" content="this is my page">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <!-- ext -->
+  <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+  <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+  <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css"></link>
+</head>
+
+<body>
+  手风琴布局
+</body>
+
+</html>
+<script type="text/javascript">
+  Ext.onReady(function () {
+    var panel = new Ext.Panel(
+      {
+        renderTo: Ext.getBody(),
+        title: '容器组件',
+        layout: 'accordion',
+        width: 500,
+        height: 200,
+        bodyStyle:'border:1px solid #333',
+        items: [
+          { title: '元素1', html: '我是内容1', },
+          { title: '元素2', html: '我是内容2', },
+        ]
+      }
+    );
+  });  
+  
+</script>

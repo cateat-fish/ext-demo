@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello-extjs</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+    </link>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var panel = new Ext.Panel(
+                {
+                    renderTo: Ext.getBody(),
+                    layout: {
+                        type: 'hbox',
+                        pack: 'start',
+                        align: 'stretch'
+                    },
+                    items: [
+                        {html:'panel 1', flex:1},
+                        {html:'panel 2', width:150},
+                        {html:'panel 3', flex:2}
+                    ]
+                });
+        });  
+    </script>
+</head>
+
+<body>
+    子组件 水平布局
+</body>
+
+</html>

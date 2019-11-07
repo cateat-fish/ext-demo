@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello-extjs</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+    </link>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script type="text/javascript">
+    Ext.onReady(function () {
+        Ext.application({
+            name: 'border布局',
+            launch: function () {
+                Ext.create('Ext.panel.Panel', {
+                    width: '100%',
+                    height: 600,
+                    layout: 'border',
+                    items: [
+                        {
+                            title: '北部',
+                            region: 'north',//指定显示区域
+                            html: '这是北部内容区',
+                            height: 100,
+                            xtype: 'panel',
+                        },
+                        {
+                            title: '中心区',
+                            region: 'center',//布局一定要布局中心区，不然报错
+                            html: '这是中心内容区',
+                            height: 400,//不要在中心区定义宽度,宽度是随其他区域而自适应
+                        },
+                        {
+                            title: '西部区',
+                            region: 'west',
+                            html: '<h3 style="color:red;">这是西部内容区</h3>',
+                            height: 400,
+                            width: 200,
+                            split: true,//为true时宽度可以通过拖动调整。
+                        },
+                        {
+                            title: '东部区',
+                            region: 'east',//布局一定要布局中心区，不然报错
+                            html: '<h3 style="color:green;">这是东部内容区</h3>',
+                            height: 400,
+                            width: 50,
+                        },
+                        {
+                            title: '南部区',
+                            region: 'south',
+                            html: '<h3 style="color:blue;">这是南部内容区</h3>',
+                            height: 100,
+                        },
+                    ],//忘记写此逗号将不会显示，建议写一个属性时后面及时添加逗号
+                    renderTo: Ext.getBody()
+                });
+            }
+        });
+    });
+</script>

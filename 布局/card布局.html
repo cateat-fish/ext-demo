@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css"></link>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    var navigate = function(panel, direction){
+        // 此程序可以包含一些控制导航步骤的必要业务逻辑. 比如调用setActiveItem, 管理导航按钮的状态,
+        // 处理可能出现的分支逻辑, 处理特殊操作像取消或结束等等. 一个完整的向导页, 对于复杂的需求
+        // 实现起来可能也会相当复杂, 在实际的程序中通常应该以继承CardLayout的方式来实现. 
+        var layout = panel.getLayout();
+        layout[direction]();
+        Ext.getCmp('move-prev').setDisabled(!layout.getPrev());
+        Ext.getCmp('move-next').setDisabled(!layout.getNext());
+    };
+    var panel = Ext.create('Ext.Panel', {
+        renderTo:Ext.getBody(),
+        layout: 'card',
+        width:800,
+        height:500,
+        bodyStyle: 'padding:15px',
+        defaults: {
+            // 应用到所有子面板
+            border: false
+        },
+        bbar: [
+            {
+                id: 'move-prev',
+                text: '上一步',
+                handler: function(btn) {
+                    navigate(btn.up("panel"), "prev");
+                },
+                disabled: true
+            },
+            '->', // 一个长间隔, 使两个按钮分布在两边
+            {
+                id: 'move-next',
+                text: '下一步',
+                handler: function(btn) {
+                    navigate(btn.up("panel"), "next");
+                }
+            }
+        ],
+        items: [
+            {
+                html: "第一个"
+            },
+            {
+                html: "第二个"
+            },
+            {
+                html: "第三个"
+            },
+            {
+                html: "第四个"
+            }
+        ]
+    });
+
+    panel.setActiveItem(0); // make "Second Item" card visible
+</script>
+

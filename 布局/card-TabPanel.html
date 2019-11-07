@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello-extjs</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+    </link>
+</head>
+
+<body>
+    <button id="show-btn">button</button>
+</body>
+
+</html>
+<script type="text/javascript">
+    Ext.onReady(function () {
+        new Ext.TabPanel({
+            //  region: 'center', //border 布局，将页面分成东，南，西，北，中五部分，这里表示TabPanel放在中间   
+            margins: '3 3 3 0',
+            activeTab: 0,
+            renderTo: Ext.getBody(),
+            defaults: {
+                autoScroll: true
+            },
+            items: [{
+                title: 'Bogus Tab',
+                html: "第一个Tab的内容."
+            }, {
+                title: 'Another Tab',
+                html: "我是另一个Tab"
+            }, {
+                title: 'Closable Tab',
+                html: "这是一个可以关闭的Tab",
+                closable: true
+            }]
+        });
+    });
+</script>

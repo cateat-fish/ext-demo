@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>hello-extjs</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+    </link>
+    <script type="text/javascript">
+        Ext.onReady(function () {
+            var panel = new Ext.Panel(
+                {
+                    width:500,
+                    height:500,
+                    title: "title",
+                    layout: 'fit',
+                    renderTo: Ext.getBody(),
+                    items: {
+                        title: 'Fit Panel',
+                        html: 'Content',
+                        border: false
+                    }
+                }
+            );
+        });  
+    </script>
+</head>
+
+<body>
+    子组件完全占满空间
+</body>
+
+</html>

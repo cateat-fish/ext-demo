@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hello-extjs</title>
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- ext -->
+    <script src="http://res.eqbidding.com/extjs6.0/ext-all.js"></script>
+    <script src="http://res.eqbidding.com/extjs6.0/classic/locale/locale-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://res.eqbidding.com/extjs6.0/classic/theme-crisp/resources/theme-crisp-all.css">
+    </link>
+</head>
+<body>
+    anchor
+</body>
+
+</html>
+<script type="text/javascript">
+    Ext.onReady(function () {
+        var panel1 = new Ext.Panel({
+            title: "panel1",
+            height: 100,
+            anchor: '-50',
+            html: "高度等于100，宽度=容器宽度-50"
+        });
+        var panel2 = new Ext.Panel({
+            title: "panel2",
+            height: 100,
+            anchor: '50%',
+            html: "高度等于100,宽度=容器宽度的50%"
+        });
+        var panel3 = new Ext.Panel({
+            title: "panel3",
+            anchor: '-10, -250',
+            html: "宽度=容器宽度-10,高度=容器宽度-250"
+        });
+        var win = new Ext.Window({
+            title: "Anchor Layout",
+            height: 400,
+            width: 400,
+            plain: true,
+            layout: 'anchor',
+            items: [panel1, panel2, panel3]
+        });
+        win.show();
+    });
+
+</script>
